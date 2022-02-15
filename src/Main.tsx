@@ -2,11 +2,12 @@ import { FunctionComponent, useEffect, useState } from "react";
 import { Guess } from "./Guess";
 import Input from "./Input";
 import { POEMS } from "./Poem";
-import { work, WorkResult } from "./Work";
+import { WorkResult } from "./Work";
 import * as dayjs from "dayjs";
 import { useLocalStorage } from "./useLocalStorage";
 import StartButton from "./StartButton";
 import { helpOpenGuess } from "./Helpers";
+import toast, { Toaster } from "react-hot-toast";
 
 const START_DATE = "2022-02-14";
 const POEM_INDEX = dayjs().diff(dayjs(START_DATE), "day");
@@ -35,12 +36,17 @@ const Main: FunctionComponent = () => {
   // a workaround solution for shake animation
   const [shake, setShake] = useState<boolean>(false);
 
-  const successed =
-    session.results &&
-    session.results.filter((result) => result.same).length !== 0;
-  const finished =
-    successed ||
-    (session.results && session.results.length === GUESS_MAX_COUNT);
+  function getGameReuslt(session: GameSession): [boolean, boolean] {
+    const successed = session.results
+      ? session.results.filter((result) => result.same).length !== 0
+      : false;
+    const finished =
+      successed ||
+      (session.results ? session.results.length === GUESS_MAX_COUNT : false);
+    return [successed, finished];
+  }
+
+  const [_, finished] = getGameReuslt(session);
 
   return (
     <div className="flex-1 flex flex-col">
@@ -88,7 +94,7 @@ const Main: FunctionComponent = () => {
         />
       ) : finished ? (
         <div className="flex-1 flex gap-5 justify-center items-center text-slate-400">
-          <div className="w-20">
+          <div className="w-20 h-20">
             <img src={`${QRCODE_IMAGE}`} alt="qrcode" />
           </div>
           <div>
@@ -111,16 +117,38 @@ const Main: FunctionComponent = () => {
           }}
           onSubmit={(result) => {
             if (result.include) {
-              setSession((lastSession) => ({
-                ...lastSession,
-                results: lastSession.results?.concat(result),
-              }));
+              setSession((lastSession) => {
+                const newSession = {
+                  ...lastSession,
+                  results: lastSession.results?.concat(result),
+                };
+
+                const [successed, finished] = getGameReuslt(newSession);
+
+                if (finished) {
+                  if (successed) {
+                    toast("猜对了", {
+                      icon: "👏",
+                    });
+                  } else {
+                    toast("太难了", {
+                      icon: "💪",
+                    });
+                  }
+                }
+
+                return newSession;
+              });
             } else {
+              toast("不在诗库中", {
+                icon: "❌",
+              });
               setShake(true);
             }
           }}
         />
       )}
+      <Toaster position="bottom-center" containerClassName="mb-20" />
     </div>
   );
 };

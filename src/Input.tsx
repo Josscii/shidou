@@ -18,6 +18,19 @@ const Input: FunctionComponent<{
       inputRef.current.focus();
     }
   }, []);
+
+  function handleValidateChange() {
+    if (inputRef.current) {
+      const chinese = inputRef.current.value
+        .split("")
+        .filter((char) => /\p{Script=Han}/u.test(char))
+        .join("")
+        .substring(0, session.answer.length);
+      inputRef.current.value = chinese;
+      onChange(chinese);
+    }
+  }
+
   return (
     <div className="p-1 h-10 flex gap-2 items-stretch">
       <input
@@ -28,19 +41,16 @@ const Input: FunctionComponent<{
           setLock(true);
           console.log("onCompositionStart");
         }}
-        onCompositionEnd={(event) => {
+        onCompositionEnd={(_) => {
           setLock(false);
           console.log("onCompositionEnd");
+          // in chrome and safari, onChange doesn't call after onCompositionEnd, so
+          // have to call validate manully.
+          handleValidateChange();
         }}
-        onChange={(event) => {
+        onChange={(_) => {
           if (!lock && inputRef.current) {
-            const chinese = event.target.value
-              .split("")
-              .filter((char) => /\p{Script=Han}/u.test(char))
-              .join("")
-              .substring(0, session.answer.length);
-            inputRef.current.value = chinese;
-            onChange(chinese);
+            handleValidateChange();
           }
         }}
       />

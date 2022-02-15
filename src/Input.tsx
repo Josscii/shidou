@@ -12,22 +12,28 @@ const Input: FunctionComponent<{
   // can't use controlled input
   const [lock, setLock] = React.useState(false);
   const inputRef = React.useRef<HTMLInputElement>(null);
+  const buttonRef = React.useRef<HTMLButtonElement>(null);
   React.useLayoutEffect(() => {
-    if (inputRef.current) {
+    if (inputRef.current && buttonRef.current) {
       inputRef.current.value = session.guessList[session.results!.length];
-      inputRef.current.focus();
+      buttonRef.current.disabled =
+        inputRef.current.value.length !== session.answer.length;
     }
   }, []);
 
   function handleValidateChange() {
     if (inputRef.current) {
-      const chinese = inputRef.current.value
+      const filtered = inputRef.current.value
         .split("")
         .filter((char) => /\p{Script=Han}/u.test(char))
         .join("")
         .substring(0, session.answer.length);
-      inputRef.current.value = chinese;
-      onChange(chinese);
+      inputRef.current.value = filtered;
+      onChange(filtered);
+
+      if (buttonRef.current) {
+        buttonRef.current.disabled = filtered.length !== session.answer.length;
+      }
     }
   }
 
@@ -55,13 +61,10 @@ const Input: FunctionComponent<{
         }}
       />
       <button
+        ref={buttonRef}
         className="w-16 flex justify-center items-center rounded bg-slate-400 disabled:bg-slate-200 text-white"
-        disabled={
-          inputRef.current != null
-            ? inputRef.current.value.length !== session.answer.length
-            : true
-        }
         onClick={() => {
+          console.log("submit");
           if (inputRef.current) {
             let result = work(
               TODAY_POEM,
@@ -72,6 +75,7 @@ const Input: FunctionComponent<{
             if (result) {
               if (result.include) {
                 inputRef.current.value = "";
+                buttonRef.current!.disabled = true;
               }
 
               onSubmit(result);

@@ -32,7 +32,7 @@ const Input: FunctionComponent<{
   }
 
   return (
-    <div className="p-1 h-10 flex gap-2 items-stretch">
+    <div className="mb-4 px-4 h-10 flex gap-2 items-stretch">
       <input
         ref={inputRef}
         type="text"

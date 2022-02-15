@@ -5,7 +5,7 @@ const StartButton: FunctionComponent<{
   onHelpStart: () => void;
 }> = ({ onStart, onHelpStart }) => {
   return (
-    <div className="flex flex-col gap-2 items-center justify-center mb-2">
+    <div className="flex flex-col gap-2 items-center justify-center mb-4">
       <button
         className="px-8 py-2 text-xl rounded bg-slate-400 text-white"
         onClick={onStart}

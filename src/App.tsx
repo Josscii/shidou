@@ -1,4 +1,5 @@
 import { FunctionComponent, useState } from "react";
+import Data from "./Data";
 import Header from "./Header";
 import Help from "./Help";
 import { Main } from "./Main";
@@ -18,7 +19,11 @@ const App: FunctionComponent = () => {
           <Help onClose={() => setModalType(undefined)} />
         </Modal>
       )}
-      {modalType === ModalType.data && <Modal>Help</Modal>}
+      {modalType === ModalType.data && (
+        <Modal>
+          <Data onClose={() => setModalType(undefined)} />
+        </Modal>
+      )}
       <Header
         onHelp={() => setModalType(ModalType.help)}
         onData={() => setModalType(ModalType.data)}

@@ -3,7 +3,7 @@ import { X } from "react-feather";
 
 const Help: FunctionComponent<{ onClose: () => void }> = ({ onClose }) => {
   return (
-    <div className="max-w-md mx-auto min-h-full flex flex-col gap-4 p-2">
+    <div className="max-w-md mx-auto min-h-full flex flex-col gap-4 p-2 bg-white/95">
       <button onClick={onClose} className="flex justify-end items-center h-10">
         <X></X>
       </button>
@@ -13,7 +13,7 @@ const Help: FunctionComponent<{ onClose: () => void }> = ({ onClose }) => {
         <div className="w-10 h-10 bg-slate-300 text-white grid place-content-center">
           会
         </div>
-        <p>代表毫不相关，再试试运气吧……</p>
+        <p>代表毫不相关，再碰碰运气吧……</p>
       </div>
       <div className="flex items-center gap-2">
         <div className="w-10 h-10 bg-yellow-400 text-white grid place-content-center">
@@ -40,9 +40,6 @@ const Help: FunctionComponent<{ onClose: () => void }> = ({ onClose }) => {
         <p>代表有同样的字，全变绿就成功了！！</p>
       </div>
       <p>开始游玩吧。</p>
-      <p className="text-xs text-slate-400">
-        *所有猜测数据均储存在本地，有可能会随着浏览器缓存清空而失效。
-      </p>
       <p className="mt-auto text-center text-slate-400 italic">
         A{" "}
         <a

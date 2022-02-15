@@ -6,7 +6,7 @@ const Header: FunctionComponent<{
   onData: () => void;
 }> = ({ onHelp, onData }) => {
   return (
-    <div className="h-10 flex justify-between items-center border-b border-b-slate-200">
+    <div className="h-10 px-2 flex justify-between items-center border-b border-b-slate-200">
       <button onClick={onHelp}>
         <HelpCircle />
       </button>

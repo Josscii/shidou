@@ -21,6 +21,7 @@ const Guess: FunctionComponent<GuessProp> = ({
   } else if (answer.length === 7) {
     gridCols += "grid-cols-7";
   }
+  console.log(answer);
   return (
     <div className={gridCols}>
       {[...answer].map((answerWord, index) => {

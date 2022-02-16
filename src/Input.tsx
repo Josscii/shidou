@@ -42,7 +42,8 @@ const Input: FunctionComponent<{
       <input
         ref={inputRef}
         type="text"
-        className="flex-1 rounded border-slate-200 border text-center"
+        placeholder="在这里输入诗句"
+        className="flex-1 rounded border-slate-200 border text-center placeholder:text-slate-300"
         onCompositionStart={(_) => {
           setLock(true);
           console.log("onCompositionStart");

@@ -8,7 +8,9 @@ const Help: FunctionComponent<{ onClose: () => void }> = ({ onClose }) => {
         <X></X>
       </button>
       <h1 className="text-xl font-bold">游戏规则</h1>
-      <p>每天会有一句唐诗三百首里的诗句供你猜测，一共有6次机会。</p>
+      <p>
+        每天会有一句唐诗三百首里的诗句供你猜测，一共有6次机会。横向的格子数代表待猜测的诗句的字数（五言或七言）。提交诗句后，背景颜色代表不同的提示信息。
+      </p>
       <div className="flex items-center gap-2">
         <div className="w-10 h-10 bg-slate-300 text-white grid place-content-center">
           会

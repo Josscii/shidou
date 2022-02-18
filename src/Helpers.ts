@@ -8,3 +8,5 @@ export function helpOpenGuess(length: number): string {
   }
   return helpOpenGuess(length);
 }
+
+export type Optional<T> = T | undefined;

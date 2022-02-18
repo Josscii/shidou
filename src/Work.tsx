@@ -1,4 +1,5 @@
 import * as pinyin from "pinyin";
+import { Optional } from "./Helpers";
 import { Poem, POEMS } from "./Poem";
 
 export interface WorkResult {
@@ -13,7 +14,7 @@ export function work(
   poem: Poem,
   answer: string,
   guess: string
-): WorkResult | undefined {
+): Optional<WorkResult> {
   if (answer.length !== guess.length) {
     return;
   }
@@ -51,7 +52,7 @@ export function work(
   return workResult;
 }
 
-function getWordYunmu(word: string): string | undefined {
+function getWordYunmu(word: string): Optional<string> {
   const w_pinyin = pinyin(word, {
     style: pinyin.STYLE_TO3NE,
   })[0][0];

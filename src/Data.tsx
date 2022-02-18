@@ -1,11 +1,12 @@
 import { FunctionComponent } from "react";
 import { X } from "react-feather";
+import { Optional } from "./Helpers";
 import { GameSession } from "./Main";
 
 const Data: FunctionComponent<{ onClose: () => void }> = ({ onClose }) => {
   let numerOfTry = 0;
   let numerOfWin = 0;
-  let lastAnswer: string | undefined = undefined;
+  let lastAnswer: Optional<string>;
   let allRecords: { key: string; value: string }[] = [];
   for (let i = 0; i < localStorage.length; i++) {
     let key = localStorage.key(i);

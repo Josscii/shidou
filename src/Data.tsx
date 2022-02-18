@@ -6,23 +6,30 @@ const Data: FunctionComponent<{ onClose: () => void }> = ({ onClose }) => {
   let numerOfTry = 0;
   let numerOfWin = 0;
   let lastAnswer: string | undefined = undefined;
+  let allRecords: { key: string; value: string }[] = [];
   for (let i = 0; i < localStorage.length; i++) {
     let key = localStorage.key(i);
     if (key) {
       let value = localStorage.getItem(key);
       if (value) {
-        numerOfTry += 1;
-        let session = JSON.parse(value) as GameSession;
-        if (session.results) {
-          if (session.results.filter((result) => result.same).length > 0) {
-            numerOfWin += 1;
-          }
-        }
-        // base on test, key is sorted, so I can hack it here.
-        if (lastAnswer === undefined && i === localStorage.length - 2) {
-          lastAnswer = session.answer;
-        }
+        allRecords.push({ key, value });
       }
+    }
+  }
+  allRecords.sort((a, b) => (a.key < b.key ? -1 : a.key > b.key ? 1 : 0));
+  console.log(allRecords);
+  for (let i = 0; i < allRecords.length; i++) {
+    const value = allRecords[i].value;
+    numerOfTry += 1;
+    let session = JSON.parse(value) as GameSession;
+    if (session.results) {
+      if (session.results.filter((result) => result.same).length > 0) {
+        numerOfWin += 1;
+      }
+    }
+    // find the last last record
+    if (lastAnswer === undefined && i === localStorage.length - 2) {
+      lastAnswer = session.answer;
     }
   }
   return (
@@ -52,7 +59,7 @@ const Data: FunctionComponent<{ onClose: () => void }> = ({ onClose }) => {
           </div>
         </div>
         <div className="mt-2">
-          <h1 className="text-lg font-bold text-center">上次答案</h1>
+          <h1 className="text-lg font-bold text-center">上次尝试答案</h1>
           <h1 className="text-center mt-2">
             {lastAnswer !== undefined ? lastAnswer : "无"}
           </h1>

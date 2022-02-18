@@ -71,7 +71,7 @@ const Main: FunctionComponent = () => {
           );
         })}
       </div>
-      {session.results === undefined ? (
+      {!session.results ? (
         <StartButton
           onStart={() => {
             setSession((lastSession) => ({

@@ -28,7 +28,7 @@ const Data: FunctionComponent<{ onClose: () => void }> = ({ onClose }) => {
       }
     }
     // find the last last record
-    if (lastAnswer === undefined && i === localStorage.length - 2) {
+    if (!lastAnswer && i === localStorage.length - 2) {
       lastAnswer = session.answer;
     }
   }
@@ -60,9 +60,7 @@ const Data: FunctionComponent<{ onClose: () => void }> = ({ onClose }) => {
         </div>
         <div className="mt-2">
           <h1 className="text-lg font-bold text-center">上次尝试答案</h1>
-          <h1 className="text-center mt-2">
-            {lastAnswer !== undefined ? lastAnswer : "无"}
-          </h1>
+          <h1 className="text-center mt-2">{lastAnswer ? lastAnswer : "无"}</h1>
         </div>
         <p className="text-xs text-slate-400 mt-2 text-center">
           *所有数据均储存在本地，有可能会随着浏览器缓存清空而失效。

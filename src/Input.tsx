@@ -23,6 +23,7 @@ const Input: FunctionComponent<{
 
   function handleValidateChange() {
     if (inputRef.current) {
+      //https://stackoverflow.com/a/61151122
       const filtered = inputRef.current.value
         .split("")
         .filter((char) => /\p{Script=Han}/u.test(char))

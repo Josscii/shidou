@@ -24,7 +24,7 @@ const Guess: FunctionComponent<GuessProp> = ({
   console.log(answer);
   return (
     <div className={gridCols}>
-      {[...answer].map((answerWord, index) => {
+      {[...answer].map((_, index) => {
         if (shake) {
           return (
             <div
@@ -36,7 +36,7 @@ const Guess: FunctionComponent<GuessProp> = ({
           );
         }
 
-        if (result === undefined) {
+        if (!result) {
           return (
             <div
               key={index}
